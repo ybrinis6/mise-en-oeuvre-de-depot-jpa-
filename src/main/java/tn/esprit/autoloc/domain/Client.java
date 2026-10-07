@@ -1,4 +1,5 @@
 package tn.esprit.autoloc.domain;
+import java.util.*;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,4 +30,7 @@ public class Client {
 
     @Column(nullable = false)
     private LocalDate dateInscription;
+
+    @OneToMany(mappedBy = "client")
+    private List<Reservation> reservations = new ArrayList<>();
 }

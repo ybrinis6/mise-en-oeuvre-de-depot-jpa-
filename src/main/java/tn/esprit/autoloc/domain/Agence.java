@@ -1,5 +1,5 @@
 package tn.esprit.autoloc.domain;
-
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,4 +22,9 @@ public class Agence {
 
     @Column(length = 20)
     private String telephone;
+    @OneToMany(mappedBy = "agence")
+    private List<Vehicule> vehicules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "agence")
+    private List<Employe> employes = new ArrayList<>();
 }
