@@ -1,15 +1,24 @@
 package tn.esprit.autoloc.domain;
-import java.util.*;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "contrat")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contrat {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
@@ -23,12 +32,10 @@ public class Contrat {
     @Column(nullable = false)
     private boolean valide;
 
-    // Propriétaire du un-à-un : id_reservation, avec unicité (1 réservation = 1 contrat)
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_reservation", nullable = false, unique = true)
+    @OneToOne(fetch = FetchType.LAZY)
     private Reservation reservation;
 
-    // Composition : les paiements dépendent du contrat
-    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Paiement> paiements = new ArrayList<>();
 }
